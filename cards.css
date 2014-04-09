@@ -1,0 +1,13 @@
+@charset "utf-8";
+body{
+	padding:16px;
+}
+h3{
+	color: RGBA(20,20,140,.7);
+}
+div.card{
+	-webkit-box-shadow: 0 0 16px 0 rgba(33,33,33,0.1);
+box-shadow: 0 0 16px 0 rgba(33,33,33,0.1);
+	margin: 8px;
+    padding: 8px
+}

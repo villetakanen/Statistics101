@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lunttilappu</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.4.2/base-min.css&pure/0.4.2/grids-min.css&pure/0.4.2/forms-min.css">
+<link href="cards.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="pure-g-r" style="max-width:1200px;margin:auto;">
+  
+  <div class="pure-u-1-3">
+    <h3>Pohjia</h3>
+    <div class="card"> 
+    $$ E(x) = \bar x = {\Sigma x \over n } $$
+      
+      $$ Var(x) = s^2 = {\Sigma x^2 + {1 \over n} \bar x^2 \over n -1} $$ </div>
+  </div>
+  
+  <div class="pure-u-1-3">
+     <h3>Keskiarvotesti</h3>
+    <div class="card"> Kun testataan $\bar x_1$  ja $\bar x_2$, missä $X$ jakaumat perusjoukoissa ovat $N(\mu_1,\sigma_1)$ ja  $N(\mu_2,\sigma_2)$, $\sigma_1=\sigma_2$, ja molemmista poimitaan otos kooltaan $n_1$ ja $n_2$ yksikköä.
+      
+      $$t = {\bar x_1 - \bar x_2 \over s \sqrt{{1 \over n_1}-{1 \over n_2}}} $$ 
+      
+      Missä
+      
+      $$s = \sqrt{(n_1-1)s_1^2+(n_2-1)s_2^2 \over n_1+n_2-2} $$ 
+      
+      noudattaa t-jakaumaa vapausastein $f = n_1+n_2-2$ jos $H_o: totta $
+      </div>
+  </div>
+  <div class="pure-u-1-3">
+  	<h3>Verrannolliset parit, keskiarvotesti</h3>
+    <div class="card"> 
+    Poimitaan $n$ yksikön otos siten että tehdään kaksi mittausta ja $H_o: \mu_1=_mu2$ sekä voidaan olettaa että havaintoparien summa on likimäärin normaalinen, tällöin
+    
+    $$t={\bar d \over {s_d \over \sqrt n}}$$
+    
+    noudattaa t-jakaumaa vapausastein $f = n-1$ jos $H_o: totta $
+    </div>
+  </div>
+
+
+
+</div>
+</body>
+</html>
