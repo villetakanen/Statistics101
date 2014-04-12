@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Todennäköisyyslaskentaa pelisuunnittelijalle</title>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.4.2/base-min.css&pure/0.4.2/grids-min.css&pure/0.4.2/forms-min.css">
+<link href="cards.css" rel="stylesheet" type="text/css">
+</head>
+
+<body style="background-color:white">
+<div class="pure-g-r" style="max-width:1200px;margin:auto;">
+<div class="pure-u-2-3">
+<h1>Todennäköisyyslaskentaa pelisuunnittelijalle</h1>
+<p> Suuressa osassa roolipelejä käytetään noppia tai muita arpavälineitä arvaamattomuuden tai jännityksen luomiseen. Aina pelin suunnittelijat eivät kuitenkaan ole huomioineet kaikkea arvan käyttöön liittyviä seikkoja ja silloin tällöin pelin suunnittelija on päättänyt jätää todennäköisyyslaskentaan liittyvän ajattelityön tekemättä kokonaan. Mitä todennäköisyyksistä sitten pitäisi ymmärtää suunnitellessa pelejä, tai yritettäessä korjata suunnittelijan täysin rikkinäiseksi tekemiä pelejä?
+<hr>
+<p> Aion tässä yhteydessä sivuuttaa kokonaan pelit jotka toimivat hyvin juuri siksi, että niiden arpaa käyttävissä mekaniikoissa ei ole mitään mieltä. Tai siksi että arpaa ei käytetä. Tai siksi että arpa tuottaa välillä mitä älyttömämpiä lopputuloksia. Tai, no ymmärrätte varmasti.</p>
+<p> Edellisten sijaan tarkoitukseni on keskittyä arvan todennäköisyyksien vaikutukseen pelikokemukseen, ja niihin todennäköisyyslaskentaan liittyviin todennäköisyyksiin, joilla on väliä pelatessa.</p>
+<p> Tämä ja seuraavat artikkelit lähtevät (ja osittain selittävät) seuraavista perusoletuksista:</p>
+<ol>
+  <li>Tapahtuma X, joka ei voi tapahtua pelikerralla on pelisuunnittelun kannalta turha. </li>
+  <li>Tapahtuma voi tapahtua pelikerralla, jos se tapahtuu arviolta yhdessä kahdestakymmenestä pelikerrasta. </li>
+  <li>Minkä tahansa roolipelissä vastaan tulevan arvan kuten nopanheiton voi korvata d100 -heitolla taulukkoa vastaan, ilman mitään vaikutusta pelin kulkuun (olettaen edelliset oletukset) </li>
+  <li>Nopat ja muut arvat toimivat arvaamattomasti. So. noppien erilaisia kulmia, sivujen painoeroja johtuen reikien syvyyksistä jne. ei huomioida koska ne ovat merkityksettömiä (olettaen 1 ja 2) </li>
+  <li>Edellisistä johtuen kaikki noppa-, ja arpamekaniikat ovat pelisuunnittelullisesti järkeviä vain jos ne ovat käytettävyydeltään parempia, intuitiivisempia tai hauskempia kuin 1d100 taulukkoa vasten.</li>
+</ol>
+<p> Nämä oletukset eivät toki päde kaikkiin peleihin. Uskoisin niiden kuitenkin kattavan suurimman osan niistä skenaarioista, joilla on väliä suunniteltaessa pelejä, joissa käytetään arpaa.</p>
+<h2>Perusteet todennäköisyyslaskennalle roolipeleissä</h2>
+<p>Suunniteltaessa roolipelien mekaniikkoja, on parasta tutustua klassisen todennäköisyyslaskennan perusajatuksiin.</p>
+<h3>Riippumattomuus</h3>
+<p>Yksittäinen tapahtuma, kuten noppa tuottaa heitettäessä tuloksekseen 4+, on aina riippumaton, koska... no se ei riipu mistään. Toisin sanoen, nopan jokainen tulos on yhtä todennäköinen riippumatta muista tekijöistä. Samaan tapaan molemmat nopat heitettäessä 2d6 ovat toisistaan riippumattomia. Ensimmäisen nopan lopputulos ei vaikuta toisen nopan tulokseen.</p>
+
+<p>Riippumattomuuden käsite on olennainen laskettaessa auki todennäköisyyksiä monen eri arvan tulosten todennäköisyydelle, kuten vaikkapa sille montako 4+ tulosta saadaan 5 d6 -nopalla heitettäessä ne kerralla, tai vaikka kuinka monta 4+ tulosta pelaaja saa pelikerran aikana, jos hän saa heittää d6 -noppaa yhteensä viisi kertaa. (Tulos on molemmlille muuten sama, koska se yksittäinen noppa ei riipu niistä muista vaikka se heitettäisiin samaan aikaan).</p>
+
+<p>Kaikki peleissä vastaan tulevat tapahtumat eivät kuitenkaan ole toisistaan riippumattomia. Jos pelissä käytetään vaikkapa noppia siten että yksi nopanheitto vaikuttaa toisessa käytettyjen noppien tyyppiin tai määrään, riippuu toinen tietysti ensimmäisestä. Samaan tapaan nostettaessa kolmea korttia tavallisesta pelikorttipakasta, ei hertta ässän nostettuaan voi enää nostaa toista hertta -ässää, ja toisen kortin nosto riippuu siten ensimmäisen kortin nostosta.</p>
+
+<p>Riippuvien ja riippumattomien tapahtumien ero on tärkeää ymmärtää, sillä niillä laskemista koskevat hieman erilaiset säännöt</p>
+
+<h3>Miksi niillä todennäköisyyksillä sitten pitää laskea?</h3>
+
+<p>Teoriassa riittävän pelitestauksen avulla voitaisiin toki ymmärtää kaikki mahdolliset lopputulokset ja niiden vaikutus peliin. Käytännössä vaadittujen pelitestikertojen määrästä tulisi kuitenkin lähes loputon jo yhtä Pathfinder -skenaariota kohden, ja siksi on käytännöllisempää laskea todennäköisyydet auki muutaman nerokkaan matemaatikon (tai loogikon jne) keksimällä cheatilla.</p>
+
+<p>Nämä cheatit lähtevät siitä oletuksesta että täysin varman tapahtuman todennäköisyys on 1 ja täysin tapahtumatta jäävän 0. Näiden oletusten lisäksi voidaan riippumattomille ja riippuville tapahtumille esittää seuraavat säännöt.</p>
+
+<h3>Kertolaskusääntö</h3>
+
+<p>Riippumattomien tapahtumien yhtäaikaisen tapahtumisen todennäköisyys on yhtä suuri kuin kunkin alkeistapatuman todennäköisyys kerrottuna toisten tapahtumien todennäköisyydellä. <p>
+
+<p><b>Esimerkiksi tuloksen 12+ saaminen nopilla 2d6:</b></p>
+
+$$P(2d6=12)=P(1d6=6 \cap 1d6=6)={1 \over 6} * {1 \over 6} = {1 \over 36} $$
+$$... \approx 2.78\% \approx P(1d100 \geq 98)$$
+
+<p><i>Sivuhuomautuksena:</i> Esimerkin perustella 12+ saaminen 2d6:lla on lähes sama asia kuin saada 98+ d100:lla!</p>
+
+Riippuvat tapahtumat muuttavat sääntöä hieman. Niiden osalta pitää tietysti aina ottaa huomioon aikaisempien tapahtumien vaikutus todennäköisyyteen.
+
+<p><b>Esimerkiksi nolla ässää kolmella kortilla:</b></p>
+
+$$P(X_1\cap X_2 \cap X_3) = P(X_1)* P(X_2)* P(X_3)$$
+$${49\over 52}*{48\over 51}*{48\over 50} = {4606\over 5525} \approx$$
+$$ 83,4\% \approx P(1d100 \geq 17)$$
+
+<p>Esimerkissä tarkastetaan siis ensin ettei ensimmäinen kortti 52:sta ole ässä. Sen jälkeen tarkastetaan ettei toinen kortti 51:stä ole ässä jne. Jos pakka sekoitettaisiin aina välillä 3 muun kuin ässän vetämisen todennäköisyys olisi: </p>
+
+$$({49\over 52})^3 \approx 83,7\%$$.
+
+<h3>Yhteenlaskusääntö</h3>
+
+Kun halutaan tietää mikä on todennäköisyys sille että X tai Y tapahtuu, X:n ja Y:n yhtäaikaisen tapahtumisen sijaan, sovelletaan kertolaskun sihaan yhteenlaskusääntöä. Siitä löytyy kertolaskusäännön tavoin kaksi muotoa tilateille jotka ovat erillisiä, ja tilanteille jotka eivät ole erillisiä.
+
+Erillisillä tapahtumilla tässä tarkoitetaan sellaisia, jotka eivät mitenkään voi tapahtua samaan aikaan. Roolipeliesimerkkinä toimisi tilanne, jossa d6: heitolla 5 arkussa on rahaa ja 6 timantti. Todennäköisyys sille että arkuissa on rahaa tai timantti olisi silloin:
+
+$$P(r\cup t) = P(r)+P(t) = {1\over6}+{1\over6} = {2\over 6} = {1\over 3}\approx$$
+
+$$ 33,3\% \approx P(1d100 \geq 67)$$
+
+<p>Tässä tapauksessa arkusta löytyisi siis aarre d100 heitolla 67+ (minkä jälkeen voitaisiin vielä arpoa d100:lla 50+ että onko se se timantti).</p>
+
+<p>Jos tapahtumat sen sijaan eivät ole erillisiä, joudutaan edellämainitusta summasta vähentämään niiden yhdessä tapahtumisen todennäköisyys, jotta sitä ei laskettaisi kahdesti mukaan. Eli jos porukalla olisikin edessään kaksi arkkua, joista toisessa on rahaa 6+ ja toisessa timantti 6+ olisi aarteen löytymisen todennäköisyys:</p>
+
+$$P(r \cup t) = P(r)+P(t)-P(r\cap t) = $$
+
+$${1\over6}+{1\over6}-{1\over36}= {11\over 36} = \approx$$
+
+$$ 30,6\% \approx P(1d100 \geq 69)$$
+
+<p>Nyt todennäköisyys saada aarre olisi enää hieman alle 31%, ja aarteen tyypin päätteleminen (rahaa, timantti tai molemmat) d100:lla vaatisi hieman edellisten laskusääntöjen yhdistelyä.<p>
+
+<h3>Mitä muuta tarvitaan?</h3>
+
+<p>Periaatteessa ylläolevia sääntöjä yhdistelemällä, ja yhdistelmistä johdetuilla uusilla säännöillä päästään laskemaan kaikki roolipeleissä vastaan tulevat tilanteet. Usein on kuitenkin helpompaa käyttää hyväkseen todennäköisyyshajontoihin jne. perustuvia kaavoja, joita käsittelen seuraavassa artikkelissa: <a href="index.html">Todennäköisyyshajonnat pelisuunnittelun apuna.</a></p>
+ 
+</body>
+</html>
