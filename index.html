@@ -5,7 +5,9 @@
 <title>Lunttilappu</title>
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
-  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	 jax: ["input/TeX","output/SVG"],
+  	 tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+ 
 });
 </script>
 <script type="text/javascript"
@@ -26,9 +28,9 @@ MathJax.Hub.Config({
     
     $Var (x)=$
     
-      $$  s^2 = {\Sigma x^2 + {1 \over n} \bar x^2 \over n -1}, otokselle$$ 
+      $$  s^2 = {\Sigma x^2 + {1 \over n} (\Sigma x)^2 \over n -1}, otokselle$$ 
       
-      $$ \sigma^2 = {\Sigma x^2 + {1 \over n} \bar x^2 \over n}, perusjoukolle $$ 
+      $$ \sigma^2 = {{1\over n}\Sigma x^2 + \bar x^2 }, perusjoukolle $$ 
       
       </div>
   </div>
@@ -65,18 +67,39 @@ MathJax.Hub.Config({
     noidattaa likimäärin jakaumaa $N(0,1)$, jos $H_o: totta$ ja $n$ on riittävän suuri.
     </div>
     </div>
+    
+    <!--X^2 yhteensopivuus jne-->
+    
     <div class="pure-u-1-3">
 	<h3>$\chi^2$ yhteensopivuustesti</h3>
-    <div class="card">
+    <div class="card"><p>Jos tapatumiin $E_1, E_2, ... ,E_k$ liittyvät havaitut frekvenssit $o_1, ... ,o_k$ ja teoreettiset frekvenssit (odotusarvot) $e_1, ... ,e_k$, niin testimuuttuja $\chi^2$<p> 
     
     $$\chi^2=\Sigma{(o_i-e_i)^2 \over e_i}$$
 
+<p> Noudattaa $\chi^2$ -jakaumaa vapausastein $f=k-1$, jos nollahypoteesi on tosi. (esim. kävijämäärät neljässä toimipisteessä eivät poikkea toisistaan)</p>
+
+<p>Testiä käytettäessä kunkin teoreettisen frekvenssin [tulee olla viittä suurempi eli] $e_i>5$.
+
+    </div>
+    <h3>$\chi^2$ -riippumattomuustesti</h3>
+    <div class="card">
+    <p>Asetetaan nollahypoteesi $H_0:$ tilastolliset muuttujat ovat riippumattomia. Tällöin testimuuttuja $\chi^2$ </p>
+     $$\chi^2=\Sigma_i^m\Sigma_j^n{(o_{ij}-e_{ij})^2 \over e_{ij}}$$
+    <p>Noudattaa $\chi^2$ -jakaumaa vapausastein $f=(m-1)(n-1)$, jos nollahypoteesi on tosi (eli muuttujat ovat riippumattomia).</p>
     </div>
 </div>
 <div class="pure-u-1-3">
-	<h3>Spearmanin korrelaatiokerroin</h3>
+	<h3>Pearsonin korrelaatiokerroin</h3>
     <div class="card">
+        <p>Pearsonin korrelaatiokerroin lasketaan jakamalla kovarianssi keskihajontojen tulolla. Usein pearsonin korrelaatiokerroin on helpoin laskea "käsin" seuraavan kaavan avulla</p>
+    
     	$$r_{xy}={\Sigma x_i y_i - n\bar x \bar y \over (n-1)s_x s_y}$$
+        
+        <p>Testimuuttuja $T$</p>
+        
+        $$t={r\sqrt{n-2} \over \sqrt{1-r^2}}$$ 
+        
+        <p>noudattaa Studentin t-jakaumaa vapausastein $df=n-2$</p>
     </div>
 </div>
 
