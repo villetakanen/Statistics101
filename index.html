@@ -101,6 +101,19 @@ MathJax.Hub.Config({
         
         <p>noudattaa Studentin t-jakaumaa vapausastein $df=n-2$</p>
     </div>
+    <h3>Regressiosuora</h3>
+    <div class="card">
+        <p>Muuttujien $X$ ja $Y$ havainnoista muodostettuihin havaintopareihin $(x_1,y_1),...,(x_n,y_n)$ sovitetun regressiosuoran $y=b_0+b_1x$ vakiot eli parametrit saadaan pienimmän neliösumman menetelmällä seuraavasti:</p>
+    
+    	$$b_1={n(\Sigma x_iy_i)-(\Sigma x_i)(\Sigma y_i) \over n(\Sigma x_i^2)-(\Sigma x_i)^2}$$
+        
+        $$b_0=\bar y-b_1 \bar x$$
+        
+        <p>ylläolevalla kaavalla saadaan mallin deterministinen osa. Jäännöstermi $e$ (residual) kuvaa eroa ennustetun ja aktuaalisen arvon välillä. Tällöin oikea arvo on:</p>
+        $$y=b_0+b_1x+e$$
+        
+        <p>Rergressiosuoran selityskerroin lasketaan ilmeisesti aina tietokoneella</p>
+    </div>
 </div>
 
 
